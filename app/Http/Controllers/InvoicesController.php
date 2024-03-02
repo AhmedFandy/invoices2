@@ -269,5 +269,10 @@ class InvoicesController extends Controller
         return redirect('/invoices');
     }
 
+    public function Print_invoice($id)
+    {
+        $invoice = invoices::where('id' ,$id)->first();
+        return view('invoices.Print_invoice' , compact('invoice'));
+    }
     
 }

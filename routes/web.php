@@ -69,6 +69,9 @@ Route::post('/Archive_upate', 'App\Http\Controllers\InvoiceAchiveController@upda
 
 Route::post('/Archive_delete', 'App\Http\Controllers\InvoiceAchiveController@destroy')->name('Archive_delete');
 
+Route::get('/Print_invoice/{id}', 'App\Http\Controllers\InvoicesController@Print_invoice');
+
+
 
 
 
