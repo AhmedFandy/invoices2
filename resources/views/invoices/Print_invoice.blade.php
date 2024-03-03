@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    طباعة  الفاتورة
+@stop
 @section('css')
     <style>
         @media print {
@@ -24,20 +27,22 @@
 				<!-- row -->
 				<div class="row row-sm">
 					<div class="col-md-12 col-xl-12">
-						<div class=" main-content-body-invoice">
+						<div class=" main-content-body-invoice" id="print">
 							<div class="card card-invoice">
 								<div class="card-body">
 									<div class="invoice-header">
-										<h1 class="invoice-title">Invoice</h1>
-										<div class="billed-from">
+										<h1 class="invoice-title">تحصيل الفاتورة</h1>
+										{{-- <div class="billed-from">
 											<h6>BootstrapDash, Inc.</h6>
 											<p>201 Something St., Something Town, YT 242, Country 6546<br>
 											Tel No: 324 445-4544<br>
 											Email: youremail@companyname.com</p>
-										</div><!-- billed-from -->
-									</div><!-- invoice-header -->
+										</div> --}}
+										<!-- billed-from -->
+									</div>
+									<!-- invoice-header -->
 									<div class="row mg-t-20">
-										<div class="col-md">
+										{{-- <div class="col-md">
 											<label class="tx-gray-600">Billed To</label>
 											<div class="billed-to">
 												<h6>Juan Dela Cruz</h6>
@@ -45,7 +50,7 @@
 												Tel No: 324 445-4544<br>
 												Email: youremail@companyname.com</p>
 											</div>
-										</div>
+										</div> --}}
 										<div class="col-md">
 											<label class="tx-gray-600">معلومات الفاتورة</label>
 											<p class="invoice-info-row"><span>رقم الفاتورة</span> <span>{{$invoice->invoice_number}}</span></p>
@@ -69,24 +74,43 @@
 												<tr>
 													<td>#</td>
 													<td class="tx-12">{{$invoice->product}}</td>
-													<td class="tx-center">{{$invoice->Amount_collection}}</td>
-													<td class="tx-right">{{$invoice->Amount_Commission}}</td>
-													<td class="tx-right">{{$invoice->Total}}</td>
+													<td class="tx-center">{{ number_format($invoice->Amount_collection , 2) }}</td>
+													<td class="tx-right"> {{ number_format($invoice->Amount_Commission , 2) }}</td>
+													@php
+													 $total = $invoice->Amount_collection + $invoice->Amount_Commission
+													@endphp
+													<td class="tx-right"> {{ number_format( $total , 2)}}</td>
+												</tr>
+												<tr>
+													<td class="valign-middle" colspan="2" rowspan="4">#</td>
+													<td class="tx-right">الاجمالى</td>
+													<td class="tx-right" colspan="2">{{ number_format( $total , 2)}}</td>
+												</tr>
+												<tr>
+													<td class="tx-right">نسبه الضريبه</td>
+													<td class="tx-right" colspan="2">{{ $invoice->Rate_VAT}}</td>
+												</tr>
+												<tr>
+													<td class="tx-right">قيمه الخصم</td>
+													<td class="tx-right" colspan="2">{{ $invoice->Discount}}</td>
+												</tr>
+												<tr>
+													<td class="tx-right"> الاجمالى شامل الضريبه</td>
+													<td class="tx-right" colspan="2"><h4 class="tx-primary tx-bold">{{ number_format($invoice->Total , 2)}}</h4></td>
 												</tr>
 												
 											</tbody>
 										</table>
 									</div>
 									<hr class="mg-b-40">
-									<a class="btn btn-purple float-left mt-3 mr-2" href="">
+									{{-- <a class="btn btn-purple float-left mt-3 mr-2" href="">
 										<i class="mdi mdi-currency-usd ml-1"></i>Pay Now
-									</a>
-									<a href="#" class="btn btn-danger float-left mt-3 mr-2">
-										<i class="mdi mdi-printer ml-1"></i>Print
-									</a>
-									<a href="#" class="btn btn-success float-left mt-3">
+									</a> --}}
+									<button class="btn btn-danger  float-left mt-3 mr-2" id="print_Button" onclick="printDiv()"> <i
+										class="mdi mdi-printer ml-1"></i>طباعة</button>
+									{{-- <a href="#" class="btn btn-success float-left mt-3">
 										<i class="mdi mdi-telegram ml-1"></i>Send Invoice
-									</a>
+									</a> --}}
 								</div>
 							</div>
 						</div>
@@ -101,4 +125,16 @@
 @section('js')
 <!--Internal  Chart.bundle js -->
 <script src="{{URL::asset('assets/plugins/chart.js/Chart.bundle.min.js')}}"></script>
+
+<script type="text/javascript">
+	function printDiv() {
+		var printContents = document.getElementById('print').innerHTML;
+		var originalContents = document.body.innerHTML;
+		document.body.innerHTML = printContents;
+		window.print();
+		document.body.innerHTML = originalContents;
+		location.reload();
+	}
+
+</script>
 @endsection
