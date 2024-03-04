@@ -90,10 +90,28 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    <div class="col-sm-6 col-md-3">
-                        <a href="invoices/create" class="btn btn-outline-primary btn-block"><i
+                    <div class="col-sm-6 col-md-4">
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="invoices/create" class="btn btn-outline-primary btn-block"><i
+                                       class="fas fa-plus"></i>&nbsp; اضافة فاتورة
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{url('export_invoices')}}" class="btn btn-outline-primary btn-block"><i
+                                        class="fas fa-file-download"></i>&nbsp;  تصدير اكسل شيت                        
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                        {{-- <a href="invoices/create" class="btn btn-outline-primary btn-block"><i
                                 class="fas fa-plus"></i>&nbsp; اضافة فاتورة
                         </a>
+
+                        <a href="{{url('export_invoices')}}" class="btn btn-outline-primary btn-block"><i
+                            class="fas fa-file-download"></i>&nbsp;  تصدير اكسل شيت                        
+                        </a> --}}
                     </div>
                 </div>
 

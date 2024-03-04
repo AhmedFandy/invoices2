@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InvoiceExport;
 use App\Models\invoice_attachments;
 use App\Models\invoices;
 use App\Models\invoices_details;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoicesController extends Controller
 {
@@ -278,4 +280,11 @@ class InvoicesController extends Controller
         return view('invoices.Print_invoice' , compact('invoice'));
     }
     
+
+    public function export() 
+    {
+        // $invoices = invoices::select('invoice_number' , 'invoice_Date' , 'Due_date' , 'product',  'Status' , 'Payment_Date')->get();
+        // dd($invoices);
+        return Excel::download(new InvoiceExport, 'invoices.xlsx');
+    }
 }

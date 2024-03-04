@@ -71,6 +71,8 @@ Route::post('/Archive_delete', 'App\Http\Controllers\InvoiceAchiveController@des
 
 Route::get('/Print_invoice/{id}', 'App\Http\Controllers\InvoicesController@Print_invoice');
 
+Route::get('export_invoices/', [ InvoicesController::class, 'export']);
+
 
 
 
