@@ -73,6 +73,14 @@ Route::get('/Print_invoice/{id}', 'App\Http\Controllers\InvoicesController@Print
 
 Route::get('export_invoices/', [ InvoicesController::class, 'export']);
 
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::resource('roles','RoleController');
+    
+    Route::resource('users','UserController');
+    
+    });
+
 
 
 
