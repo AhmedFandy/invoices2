@@ -1,24 +1,19 @@
 <?php
+
 namespace App\Http\Controllers;
+
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
 use Spatie\Permission\Models\Role;
-use DB;
-use Hash;
+
 class UserController extends Controller
 {
-/**
-* Display a listing of the resource.
-*
-* @return \Illuminate\Http\Response
-*/
-public function index(Request $request)
-{
-$data = User::orderBy('id','DESC')->paginate(5);
-return view('users.show_users',compact('data'))
-->with('i', ($request->input('page', 1) - 1) * 5);
-}
+    public function index(Request $request)
+    {
+        $data = User::orderBy('id','DESC')->paginate(5);
+        return view('users.show_users',compact('data'))
+        ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
 
 
 /**
@@ -26,38 +21,38 @@ return view('users.show_users',compact('data'))
 *
 * @return \Illuminate\Http\Response
 */
-public function create()
-{
-$roles = Role::pluck('name','name')->all();
+   public function create()
+   {
+    $roles = Role::pluck('name','name')->all();
 
-return view('users.Add_user',compact('roles'));
+    return view('users.Add_user',compact('roles'));
 
-}
+   }
 /**
 * Store a newly created resource in storage.
 *
 * @param  \Illuminate\Http\Request  $request
 * @return \Illuminate\Http\Response
 */
-public function store(Request $request)
-{
-$this->validate($request, [
-'name' => 'required',
-'email' => 'required|email|unique:users,email',
-'password' => 'required|same:confirm-password',
-'roles_name' => 'required'
-]);
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|same:confirm-password',
+        'roles_name' => 'required'
+        ]);
 
-$input = $request->all();
+        $input = $request->all();
 
 
-$input['password'] = Hash::make($input['password']);
+        $input['password'] = Hash::make($input['password']);
 
-$user = User::create($input);
-$user->assignRole($request->input('roles_name'));
-return redirect()->route('users.index')
-->with('success','تم اضافة المستخدم بنجاح');
-}
+        $user = User::create($input);
+        $user->assignRole($request->input('roles_name'));
+        return redirect()->route('users.index')
+        ->with('success','تم اضافة المستخدم بنجاح');
+    }
 
 /**
 * Display the specified resource.

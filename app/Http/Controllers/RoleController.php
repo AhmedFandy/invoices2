@@ -1,28 +1,24 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
-use DB;
+use Spatie\Permission\Models\Role;
+
 class RoleController extends Controller
 {
-/**
-* Display a listing of the resource.
-*
-* @return \Illuminate\Http\Response
-*/
+    
+// function __construct()
+// {
 
+// $this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
+// $this->middleware('permission:اضافة صلاحية', ['only' => ['create','store']]);
+// $this->middleware('permission:تعديل صلاحية', ['only' => ['edit','update']]);
+// $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
 
-function __construct()
-{
-
-$this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
-$this->middleware('permission:اضافة صلاحية', ['only' => ['create','store']]);
-$this->middleware('permission:تعديل صلاحية', ['only' => ['edit','update']]);
-$this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
-
-}
+// }
 
 
 
