@@ -44,7 +44,8 @@
             <div class="card-header pb-0">
                 <div class="col-sm-1 col-md-2">
                     @can('اضافة مستخدم')
-                        <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">اضافة مستخدم</a>
+                        <a class="btn btn-outline-primary btn-block" href="{{ route('users.create') }}"><i
+                            class="fas fa-plus"></i>&nbsp; اضافة مستخدم </a>
                     @endcan
                 </div>
             </div>
