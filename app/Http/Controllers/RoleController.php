@@ -10,15 +10,15 @@ use Spatie\Permission\Models\Role;
 class RoleController extends Controller
 {
     
-// function __construct()
-// {
+function __construct()
+{
 
-// $this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
-// $this->middleware('permission:اضافة صلاحية', ['only' => ['create','store']]);
-// $this->middleware('permission:تعديل صلاحية', ['only' => ['edit','update']]);
-// $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
+$this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
+$this->middleware('permission:اضافة صلاحية', ['only' => ['create','store']]);
+$this->middleware('permission:تعديل صلاحية', ['only' => ['edit','update']]);
+$this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
 
-// }
+}
 
 
 
@@ -56,8 +56,10 @@ $this->validate($request, [
 'name' => 'required|unique:roles,name',
 'permission' => 'required',
 ]);
-$role = Role::create(['name' => $request->input('name')]);
-$role->syncPermissions($request->input('permission'));
+$role = Role::create(['name' => $request->input('name')]);                   
+$permissions = $request->permission;
+$role->syncPermissions($request->input($permissions));
+dd($role);
 return redirect()->route('roles.index')
 ->with('success','Role created successfully');
 }
